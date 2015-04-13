@@ -2,9 +2,11 @@ module Hublot
 
   # Clock argument for testing; defaults to Time
   def pretty(clock=Time.now)
-    @expired = (clock-self).to_i
+    @this_time = self.is_a?(Time) ? self : self.to_time
+    
+    @expired = (clock-@this_time).to_i
     @today = clock.strftime('%A')
-    @created = self.to_time.strftime('%A')
+    @created = @this_time.to_time.strftime('%A')
 
     @days = {
       "Monday" => 1,
@@ -79,11 +81,11 @@ private
   end
 
   def today
-    "Today at#{timeify}"
+    "Today #{timeify}"
   end
 
   def timeify
-    "#{self.to_time.strftime("%l:%M%p")}"
+    "#{@this_time.to_time.strftime("%l:%M%p")}"
   end
 
   def is_today?
@@ -91,7 +93,7 @@ private
   end
 
   def yesterday
-    "Yesterday at#{timeify}"
+    "Yesterday #{timeify}"
   end
 
   def is_yesterday?
@@ -99,7 +101,7 @@ private
   end
 
   def this_week
-    "#{@created} at#{timeify}"
+    "#{@created} #{timeify}"
   end
 
   def this_week?
@@ -107,7 +109,7 @@ private
   end
 
   def last_week
-    "Last #{@created} at#{timeify}"
+    "Last #{@created} #{timeify}"
   end
 
   def last_week?
@@ -115,6 +117,6 @@ private
   end
 
   def datetimefiesta
-    self.strftime("%A, %B %e %l:%M%p")
+    @this_time.strftime("%A, %B %e %l:%M%p")
   end
 end
