@@ -6,7 +6,7 @@ module Hublot
     
     @expired = (clock-@this_time).to_i
     @today = clock.strftime('%A')
-    @created = @this_time.to_time.strftime('%A')
+    @created = @this_time.strftime('%A')
 
     @days = {
       "Monday" => 1,
@@ -85,7 +85,7 @@ private
   end
 
   def timeify
-    "#{@this_time.to_time.strftime("%l:%M%p")}"
+    "#{@this_time.strftime("%l:%M%p")}"
   end
 
   def is_today?
